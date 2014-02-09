@@ -8,7 +8,7 @@ case. Then check the datasheet's device overview. This will show you the amount 
 There will be a link error if there is not this amount of RAM free at the
 end.
 */
-ENTRY(main)
+ENTRY(Reset_Handler)
 
 
 /* Memory Spaces Definitions */

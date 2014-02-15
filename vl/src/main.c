@@ -1,5 +1,16 @@
 #include "stm32f10x.h"
 #include "main.h"
+#include "stm32f10x_gpio.h"
+#include "stm32f10x_tim.h"
+#include "stm32f10x_rcc.h"
+
+#define LEDG            GPIO_Pin_9
+#define LEDB            GPIO_Pin_8
+#define LEDPORT         GPIOC
+#define LEDPORTCLK      RCC_APB2Periph_GPIOC
+#define BUTTON          GPIO_Pin_0
+#define BUTTONPORT      GPIOA
+#define BUTTONPORTCLK   RCC_APB2Periph_GPIOA
 
 /* Defines */
 #define EVER        (;;)
@@ -32,6 +43,20 @@ int main(void)
     //GPIO_ToggleBits(GPIOD, GPIO_Pin_13 | GPIO_Pin_15);
 
     //INTTIM_Config();
+
+    // PC 8 en 9 zijn de leds
+
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    GPIO_InitTypeDef GPIO_INIT_C;
+    GPIO_INIT_C.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9;
+    GPIO_INIT_C.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_INIT_C.GPIO_Speed = GPIO_Speed_2MHz;
+    GPIO_Init(GPIOC,&GPIO_INIT_C);
+    GPIO_SetBits(LEDPORT,LEDG | LEDB);
+
+
+
+
 
     for EVER
     {

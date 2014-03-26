@@ -21,11 +21,13 @@ int main(void);
 
 void TIM2_IRQHandler(void);
 void INTTIM_Config(void);
+extern void initialise_monitor_handles(void);
 
 /* main C entry point */
 int main(void)
 {
     //GPIO_InitTypeDef GPIO_InitStructure;
+    char test[100];
     int i=0;
 
     //RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
@@ -45,6 +47,10 @@ int main(void)
     //INTTIM_Config();
 
     // PC 8 en 9 zijn de leds
+//    initialise_monitor_handles();
+
+    sprintf(test, "Hello World\n");
+    printf("%s",test);
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
     GPIO_InitTypeDef GPIO_INIT_C;

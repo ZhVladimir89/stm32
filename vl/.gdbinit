@@ -3,4 +3,5 @@ monitor halt
 file out/main.elf
 load out/main.elf
 monitor reset halt
+mon arm semihosting enable
 stepi

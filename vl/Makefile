@@ -23,7 +23,8 @@ CFLAGS  =  -I. $(INC_DIRS) -O0 -g -Wall
 CFLAGS += -mcpu=cortex-m3 -mthumb -mlittle-endian -mthumb-interwork
 CLAGS  += -DSTM32F10X_MD_VL=1 USE_STDPERIPH_DRIVER=1
 CFLAGS += -mfpu=vfpv3-d16 -mfloat-abi=softfp
-CFLAGS += -ffreestanding -nostdlib
+CFLAGS += -ffreestanding #-nostdlib
+CFLAGS += --specs=rdimon.specs -lc -lrdimon
 LFLAGS  = $(CFLAGS) -T$(LD_FILE)
 CPFLAGS = -Obinary
 ODFLAGS = -S

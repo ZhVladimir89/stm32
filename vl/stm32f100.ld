@@ -69,7 +69,7 @@ SECTIONS
         . = ALIGN(4);
         _ebss = .;     /* Global symbol at end of bss */
         __bss_end__ = _ebss;
-        _end = .;
+        __end__ = .;
         PROVIDE (end = .);
     } >RAM
 }

@@ -47,7 +47,7 @@ int main(void)
     //INTTIM_Config();
 
     // PC 8 en 9 zijn de leds
-//    initialise_monitor_handles();
+    initialise_monitor_handles();
 
     sprintf(test, "Hello World\n");
     printf("%s",test);

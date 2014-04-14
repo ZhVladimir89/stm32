@@ -1,33 +1,4 @@
 /**
- * HardFault_HandlerAsm:
- * Alternative Hard Fault handler to help debug the reason for a fault.
- * To use, edit the vector table to reference this function in the HardFault vector
- * This code is suitable for Cortex-M3 and Cortex-M0 cores
- */
-
-// Use the 'naked' attribute so that C stacking is not used.
-__attribute__((naked))
-void HardFault_Handler(void){
-    /*
-     * Get the appropriate stack pointer, depending on our mode,
-     * and use it as the parameter to the C handler. This function
-     * will never return
-     */
-
-    __asm(  ".syntax unified\n"
-            "MOVS   R0, #4  \n"
-            "MOV    R1, LR  \n"
-            "TST    R0, R1  \n"
-            "BEQ    _MSP    \n"
-            "MRS    R0, PSP \n"
-            "B  HardFault_HandlerC  \n"
-            "_MSP:  \n"
-            "MRS    R0, MSP \n"
-            "B  HardFault_HandlerC  \n"
-            ".syntax divided\n") ;
-}
-
-/**
  * HardFaultHandler_C:
  * This is called from the HardFault_HandlerAsm with a pointer the Fault stack
  * as the parameter. We can then read the values from the stack and place them

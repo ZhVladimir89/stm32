@@ -14,6 +14,7 @@ ASM_FILES := $(wildcard src/*.s)
 CXX_FILES := $(wildcard src/*.c)
 OBJ_FILES := $(addprefix obj/,$(notdir $(CXX_FILES:.c=.o)))
 OBJ_FILES += $(addprefix obj/,$(notdir $(ASM_FILES:.s=.o)))
+OBJ_FILES += libopencm3_stm32f1.a
 INC_DIRS := inc
 INC_DIRS := $(addprefix -I,$(INC_DIRS))
 OUT_FILE := out/main
@@ -25,6 +26,7 @@ CFLAGS += -mcpu=cortex-m3 -mthumb -mlittle-endian
 CLAGS  += -DSTM32F10X_MD_VL=1 USE_STDPERIPH_DRIVER=1
 #CFLAGS += -ffreestanding #-nostdlib
 CFLAGS += --specs=rdimon.specs -lc -lrdimon
+CFLAGS += -DSTM32F1
 LFLAGS  = $(CFLAGS) -T$(LD_FILE)
 CPFLAGS = -Obinary
 ODFLAGS = -S
@@ -39,11 +41,10 @@ RED_COLOR       = \x1b[31;01m
 WHITE_COLOR     = \x1b[37;01m
 
 all: $(OUT_FILE).bin
-#run
 
 clean:
 	@echo -e "$(WHITE_COLOR)>>> CLEANING$(NO_COLOR)"
-	-rm -f main.lst obj/*.o out/*.elf out/*.lst out/*.bin
+	-rm -rf obj out
 
 flash: $(OUT_FILE).bin
 	@echo -e "$(WHITE_COLOR)>>> FLASHING$(NO_COLOR)"
@@ -62,6 +63,7 @@ $(OUT_FILE).elf: $(OBJ_FILES)
 	$(LD) $(LFLAGS) -o $@ $^ -Wl,-Map,$(OUT_FILE).map
 
 obj/%.o: src/%.c
+	mkdir -p obj out
 	@echo -e "$(WHITE_COLOR)>>> COMPILING [C] $^$(NO_COLOR)"
 	$(CC) -c $(CFLAGS) $< -o $@
 

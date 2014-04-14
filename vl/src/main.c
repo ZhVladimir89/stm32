@@ -171,7 +171,7 @@ void __end__ (void){
 
 }
 
-void _exit(void){}
+//void _exit(void){}
 
 void clock_init(void)
 {

@@ -16,3 +16,7 @@
 *.exe
 *.out
 *.app
+
+# Other ignors
+obj/
+out/

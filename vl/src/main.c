@@ -87,6 +87,7 @@ int cycleLed(int OC2_ONOFF, int OC3_ONOFF, int OC4_ONOFF){
         if (OC4_ONOFF)
             pwm_set_pulse_width(TIM2, TIM_OC4, i);
     }
+    return 0;
 }
 
 int cycleLedOn(int OC2_ON, int OC3_ON, int OC4_ON){
@@ -100,6 +101,7 @@ int cycleLedOn(int OC2_ON, int OC3_ON, int OC4_ON){
         if (OC4_ON)
             pwm_set_pulse_width(TIM2, TIM_OC4, i);
     }
+    return 0;
 }
 
 int cycleLedOff(int OC2_OFF, int OC3_OFF, int OC4_OFF){
@@ -113,16 +115,13 @@ int cycleLedOff(int OC2_OFF, int OC3_OFF, int OC4_OFF){
         if (OC4_OFF)
             pwm_set_pulse_width(TIM2, TIM_OC4, i);
     }
-
+    return 0;
 }
 
 extern void initialise_monitor_handles(void);
 
 int main(void)
 {
-    int state = 0;
-    int i = 0;
-    int j = PWM_PERIOD;
     clock_init();
     gpio_init();
     servo_init();

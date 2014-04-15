@@ -10,19 +10,21 @@ GDBTUI = $(TCPREFIX)gdb -tui
 
 STM32FLASH = ./stm32_flash.pl
 
+SRC_DIR := src lib/core lib/periph
+
 ASM_FILES := $(wildcard src/*.s)
-CXX_FILES := $(wildcard src/*.c)
+CXX_FILES := $(foreach sdir, $(SRC_DIR), $(wildcard $(sdir)/*.c))
 OBJ_FILES := $(addprefix obj/,$(notdir $(CXX_FILES:.c=.o)))
 OBJ_FILES += $(addprefix obj/,$(notdir $(ASM_FILES:.s=.o)))
-OBJ_FILES += inc/libopencm3_stm32f1.a
-INC_DIRS := inc
+OBJ_FILES += lib/libopencm3_stm32f1.a
+INC_DIRS := lib/periph lib/core
 INC_DIRS += ../
 INC_DIRS := $(addprefix -I,$(INC_DIRS))
 OUT_FILE := out/main
 LD_FILE := stm32f100.ld
 
 CFLAGS  =  -I. $(INC_DIRS) -O0 -g -Wall
-CFLAGS += -mcpu=cortex-m3 -mthumb -mlittle-endian 
+CFLAGS += -mcpu=cortex-m3 -mthumb -mlittle-endian
 #-mthumb-interwork
 CLAGS  += -DSTM32F10X_MD_VL=1 USE_STDPERIPH_DRIVER=1
 #CFLAGS += -ffreestanding #-nostdlib
@@ -31,6 +33,7 @@ CFLAGS += -DSTM32F1
 LFLAGS  = $(CFLAGS) -T$(LD_FILE)
 CPFLAGS = -Obinary
 ODFLAGS = -S
+VPATH = src:lib/core:lib/periph
 
 ################################################################
 ## Colordefinition
@@ -63,7 +66,9 @@ $(OUT_FILE).elf: $(OBJ_FILES)
 	@echo -e "$(WHITE_COLOR)>>> LINKING$(NO_COLOR)"
 	$(LD) $(LFLAGS) -o $@ $^ -Wl,-Map,$(OUT_FILE).map
 
-obj/%.o: src/%.c
+obj/%.o: %.c
+	@echo 'CXX_FILES = $(CXX_FILES)'
+	@echo 'inc_dirs = $(INC_DIRS)'
 	mkdir -p obj out
 	@echo -e "$(WHITE_COLOR)>>> COMPILING [C] $^$(NO_COLOR)"
 	$(CC) -c $(CFLAGS) $< -o $@

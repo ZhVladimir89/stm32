@@ -14,8 +14,9 @@ ASM_FILES := $(wildcard src/*.s)
 CXX_FILES := $(wildcard src/*.c)
 OBJ_FILES := $(addprefix obj/,$(notdir $(CXX_FILES:.c=.o)))
 OBJ_FILES += $(addprefix obj/,$(notdir $(ASM_FILES:.s=.o)))
-OBJ_FILES += libopencm3_stm32f1.a
+OBJ_FILES += inc/libopencm3_stm32f1.a
 INC_DIRS := inc
+INC_DIRS += ../
 INC_DIRS := $(addprefix -I,$(INC_DIRS))
 OUT_FILE := out/main
 LD_FILE := stm32f100.ld

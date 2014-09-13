@@ -26,7 +26,6 @@ int led_main(void)
 
     initialise_monitor_handles();
 
-    printf("Hello World\n");
 
     for EVER
     {

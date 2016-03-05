@@ -1,9 +1,10 @@
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef _EXCEPTIONS_H_
 #define _EXCEPTIONS_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x.h"
+#include "stm32f4xx.h"
 
 /* Exported functions ------------------------------------------------------- */
 void NMI_Handler(void);
